@@ -1,12 +1,14 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { HiChevronLeft, HiOutlineHome,HiOutlineInformationCircle } from "react-icons/hi2";
 
 const Sidebar = () => {
+  const router = useRouter()
   return (
     <div className="bg-white shadow-md w-72">
       <div className="p-2">
         <ul>
-          <li className="hover:bg-neutral-200 rounded-md transition duration-300">
+          <li className={`${router.pathname === "/dashboard" &&"bg-blue-400 text-white"} hover:bg-blue-400 hover:text-white mb-1 rounded-md transition duration-300`}>
             <Link
               href={"/dashboard"}
               className="flex justify-between p-3"
@@ -18,7 +20,7 @@ const Sidebar = () => {
               </div>
             </Link>
           </li>
-          <li className="hover:bg-neutral-200 rounded-md transition duration-300">
+          <li className={`${router.pathname === "/dashboard/baseinfo"&&"bg-blue-400 text-white"} hover:bg-blue-400 hover:text-white rounded-md transition duration-300`}>
             <Link
               href={"/dashboard/baseinfo"}
               className="flex justify-between p-3"
