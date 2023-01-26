@@ -1,16 +1,17 @@
-import { addNewCity, deleteAddedCities } from "@/reducers/baseInfo/dispatch";
-import { initialState, reducer } from "@/reducers/baseInfo/reducer";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import { HiPlus, HiXMark } from "react-icons/hi2";
 import { v4 as uuid } from "uuid";
+import { useSelector, useDispatch } from "react-redux";
+import { addNewCity, deleteAddedCities } from "@/redux/reducers/baseInfo";
 
 const BaseInfo = () => {
   const [newCity, setNewCity] = useState("");
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const {addedCities} = useSelector((state) => state.baseInfo);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addNewCity(uuid().slice(0, 8), newCity));
+    dispatch(addNewCity({ id: uuid().slice(0, 8), cityName: newCity }));
   };
 
   const handleNewCity = (e) => {
@@ -21,7 +22,7 @@ const BaseInfo = () => {
     dispatch(deleteAddedCities(id));
   };
 
-  const cities = state.addedCities.map((item) => {
+  const cities = addedCities.map((item) => {
     return (
       <li
         key={item.id}
@@ -74,7 +75,14 @@ const BaseInfo = () => {
             </h4>
             <div>
               <ul>
-                {cities.length ? cities : <li className="p-3 text-center text-neutral-400"> لطفا حداقل یک شهر ثبت کنید </li>}
+                {cities.length ? (
+                  cities
+                ) : (
+                  <li className="p-3 text-center text-neutral-400">
+                    {" "}
+                    لطفا حداقل یک شهر ثبت کنید{" "}
+                  </li>
+                )}
               </ul>
             </div>
           </div>
